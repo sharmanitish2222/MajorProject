@@ -3,90 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plant Disease Recognition</title>
+    <title>Crop Disease Prediction</title>
     <link rel="icon" href="../static/images/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="../static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">
-            <img src="../static/images/logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
-            PHASAL
+    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
+        <div class="container">
+          <a class="navbar-brand fw-bold" href="#">
+            <img src="../static/images/logo.svg" alt="Logo" width="30" height="24" class="d-inline-block align-text-top me-2">
+            Crop Disease Prediction
           </a>
-          <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ms-auto">
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
             </ul>
-          </div> -->
+          </div>
         </div>
       </nav>
-      <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner " >
-            <div class="carousel-item active">
-              <div class="carousel-text-wrapper">
-                <h1 class="carousel-text-title">Plant Disease Recognition</h1>
-                <div class="form-box">
-                  <form action="/upload/" method = "POST" enctype="multipart/form-data">
-                    <h1>Upload Image</h1>
-                    <div class="input-box d-flex">
-                      <input type="file"  accept="image/png, image/jpeg"  name="img" required>
+      <div class="hero-section">
+        <div class="container">
+          <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+              <div class="hero-content text-white">
+                <h1 class="display-3 fw-bold mb-4">Crop Disease Prediction</h1>
+                <p class="lead mb-5">Advanced AI-powered system to detect and predict crop diseases early. Upload an image of your plant leaf to get instant diagnosis and treatment recommendations.</p>
+                
+                <div class="upload-card bg-white text-dark p-4 rounded-4 shadow-lg">
+                  <h3 class="text-center mb-4 text-success">Upload Plant Image</h3>
+                  <form action="/upload/" method="POST" enctype="multipart/form-data" id="uploadForm">
+                    <div class="mb-3">
+                      <label for="img" class="form-label fw-semibold">Choose Image File</label>
+                      <input type="file" class="form-control" id="img" name="img" accept="image/png, image/jpeg" required>
+                      <div class="form-text">Supported formats: PNG, JPG, JPEG (Max size: 10MB)</div>
                     </div>
-                    <div class="input-box d-flex">
-                      <button type="submit" class="btn btn-success m-auto">Upload</button>
+                    <div class="d-grid">
+                      <button type="submit" class="btn btn-success btn-lg">
+                        <i class="bi bi-upload me-2"></i>Analyze Image
+                      </button>
                     </div>
                   </form>
-                  {% if result %}
-                  <div class="result-container">
-                    <div class="result-box">
-                      <div class="result-img-container">
-                        <!-- <img src="../static/images/Apple_tree_leaf.jpg" alt="uploaded image" class="result-image"> -->
-                        <img src="{{imagepath}}" alt="uploaded image" class="result-image">
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="hero-image text-center">
+                <div class="illustration-container">
+                  <div class="floating-leaf">🍃</div>
+                  <div class="floating-leaf-2">🌿</div>
+                  <div class="main-illustration">🌱</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {% if result %}
+          <div class="row mt-5">
+            <div class="col-12">
+              <div class="result-section">
+                <div class="card border-0 shadow-lg">
+                  <div class="card-header bg-success text-white">
+                    <h2 class="mb-0"><i class="bi bi-clipboard-check me-2"></i>Analysis Results</h2>
+                  </div>
+                  <div class="card-body p-0">
+                    <div class="row g-0">
+                      <div class="col-md-4">
+                        <div class="image-container p-3">
+                          <img src="{{imagepath}}" alt="Uploaded plant image" class="img-fluid rounded-3 shadow">
+                        </div>
                       </div>
-                      <div class="result-text">
-                        <h3>                   
-                          {{prediction['name']}}
-                        </h3>
-                        <p>
-                          {{prediction['cause']}}
-                        </p>
-                        <p>
-                          {{prediction['cure']}}
-                        </p>
+                      <div class="col-md-8">
+                        <div class="result-details p-4">
+                          <div class="disease-info">
+                            <h3 class="text-success mb-3">
+                              <i class="bi bi-bug me-2"></i>{{prediction['name']}}
+                            </h3>
+                            
+                            <div class="info-section mb-4">
+                              <h5 class="text-danger mb-3">
+                                <i class="bi bi-exclamation-triangle me-2"></i>Cause
+                              </h5>
+                              <p class="text-muted">{{prediction['cause']}}</p>
+                            </div>
+                            
+                            <div class="info-section">
+                              <h5 class="text-primary mb-3">
+                                <i class="bi bi-shield-check me-2"></i>Treatment & Cure
+                              </h5>
+                              <p class="text-muted">{{prediction['cure']}}</p>
+                            </div>
+                            
+                            <div class="action-buttons mt-4">
+                              <button class="btn btn-outline-success me-2" onclick="window.print()">
+                                <i class="bi bi-printer me-1"></i>Print Results
+                              </button>
+                              <button class="btn btn-outline-primary" onclick="location.reload()">
+                                <i class="bi bi-arrow-clockwise me-1"></i>Analyze Another Image
+                              </button>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                {% endif %}
                 </div>
-                
-                
-                <!-- <div class="m-auto text-center">
-                  <h1>फसल karo Hustle नहीं</h1>
-                  <h3 class="hero-subhead">Lorem ipsum dolor sit amet, consectetur adipiscing elit,</h3>
-                </div> -->
               </div>
-              
             </div>
-           
-        </div>
-       
+          </div>
+        {% endif %}
         </div>
       </div>
       <script src="../static/js/bootstrap.bundle.min.js"></script>
+      <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(e) {
+          const submitBtn = this.querySelector('button[type="submit"]');
+          const fileInput = document.getElementById('img');
+          const fileSize = fileInput.files[0]?.size || 0;
+          
+          // Validate file size (10MB max)
+          if (fileSize > 10 * 1024 * 1024) {
+            alert('File size must be less than 10MB');
+            e.preventDefault();
+            return;
+          }
+          
+          // Show loading state
+          submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Analyzing...';
+          submitBtn.disabled = true;
+        });
+        
+        // File input preview
+        document.getElementById('img').addEventListener('change', function(e) {
+          const file = e.target.files[0];
+          if (file) {
+            const fileName = file.name;
+            const fileSize = (file.size / 1024 / 1024).toFixed(2);
+            console.log(`Selected file: ${fileName} (${fileSize} MB)`);
+          }
+        });
+      </script>
 </body>
 </html>
